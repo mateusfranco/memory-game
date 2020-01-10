@@ -1,14 +1,14 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 import Board from '../components/Board'
 import Card from '../components/Card';
-
-import {connect} from 'react-redux'
+import {selectCard} from '../store/actions'
 
 const GamePage = ({cards, handlerCard}) => (
     <Board>
     {cards.map(card=>(
-        <Card flipped={card.flipped} name={card.name} onClick={() => handlerCard(card)}>
+        <Card flipped={card.flipped} name={card.name} onClick={() => handlerCard(card.key)}>
 
         </Card>
     ))
@@ -23,10 +23,6 @@ const mapStateToProps = (state) => ({
     cards: state.cards
 })
 
-const mapDispatchToProps = dispatch => ({
-    handlerCard: card => {
-        dispatch({type: 'select_card', key: card.key})
-    }
-})
+const mapDispatchToProps = { handlerCard: selectCard }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage)
